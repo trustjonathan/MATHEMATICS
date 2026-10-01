@@ -235,7 +235,6 @@ a:focus-visible { outline: 3px solid rgba(36, 107, 73, 0.32); outline-offset: 2p
 
 @media (max-width: 760px) {
   .site-header { min-height: auto; flex-wrap: wrap; gap: 12px; padding: 12px 20px; }
-  .site-header nav { width: 100%; flex-wrap: wrap; justify-content: space-between; gap: 8px 13px; }
   .site-header nav a { font-size: 0.78rem; }
   main { padding: 0 20px; }
   .archive-intro { grid-template-columns: 1fr; gap: 22px; min-height: auto; padding: 46px 4%; }
@@ -246,7 +245,7 @@ a:focus-visible { outline: 3px solid rgba(36, 107, 73, 0.32); outline-offset: 2p
   .archive-controls { grid-template-columns: 1fr 1fr; }
   .search-field { grid-column: 1 / -1; }
   .contribute-band { align-items: flex-start; flex-direction: column; margin: 0 0 48px; padding: 26px 22px; }
-  .site-footer { align-items: flex-start; flex-direction: column; padding: 24px 20px; }
+  .site-footer { grid-template-columns: 1fr 1fr; padding: 24px 20px; }
   .site-footer p { margin: 0; }
 }
 
