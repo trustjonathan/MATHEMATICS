@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /private/
 Allow: /
 
-Sitemap: https://github.com/trustjonathan/MATHEMATICS/sitemap.xml
+Sitemap: https://trustjonathan.github.io/MATHEMATICS/sitemap.xml
