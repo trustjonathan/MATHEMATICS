@@ -1,24 +1,27 @@
+---
+import '../../archive.css';
+import logo from '../../logo.png';
+import mathematicsImage from '../../mathematics.jpg';
+---
+
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Search the Study Hub Mathematics archive for curriculum notes and exam practice resources.">
-    <meta name="theme-color" content="#f4f5ef">
-    <link rel="canonical" href="https://trustjonathan.github.io/MATHEMATICS/archive.html">
-    <meta property="og:title" content="Mathematics Archive | Study Hub">
-    <meta property="og:description" content="Search Mathematics notes, worked examples, and exam practice resources from Study Hub.">
-    <meta property="og:url" content="https://trustjonathan.github.io/MATHEMATICS/archive.html">
-    <meta property="og:image" content="https://trustjonathan.github.io/MATHEMATICS/mathematics.jpg">
-    <meta property="og:type" content="website">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Search the Study Hub Mathematics archive for curriculum notes and exam practice resources." />
+    <meta name="theme-color" content="#f4f5ef" />
+    <link rel="canonical" href="https://trustjonathan.github.io/MATHEMATICS/archive.html" />
+    <meta property="og:title" content="Mathematics Archive | Study Hub" />
+    <meta property="og:description" content="Search Mathematics notes, worked examples, and exam practice resources from Study Hub." />
+    <meta property="og:url" content="https://trustjonathan.github.io/MATHEMATICS/archive.html" />
+    <meta property="og:image" content="https://trustjonathan.github.io/MATHEMATICS/mathematics.jpg" />
+    <meta property="og:type" content="website" />
     <title>Mathematics Archive | Study Hub</title>
-    <link rel="icon" href="logo.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="archive.css">
-    <script src="supabase-config.js"></script>
-    <script src="archive.js" defer></script>
+    <link rel="icon" href={logo.src} type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
     <header class="site-header" id="top">
@@ -38,7 +41,7 @@
           <a href="#archive" aria-current="page">Archive</a>
         </nav>
         <a class="brand" href="https://trustjonathan.github.io/STUDY-HUB/" aria-label="Study Hub home">
-          <img src="logo.png" width="38" height="38" alt="">
+          <img src={logo.src} width="38" height="38" alt="" />
           <span>Study Hub</span>
         </a>
         <nav class="header-actions" aria-label="Archive actions">
@@ -84,7 +87,7 @@
           <a class="text-link" href="#archive">Browse the archive <span aria-hidden="true">↓</span></a>
         </div>
         <figure class="intro-image">
-          <img src="mathematics.jpg" alt="Mathematical formulas and symbols">
+          <img src={mathematicsImage.src} alt="Mathematical formulas and symbols" />
           <figcaption>Notes and practice for every stage of the Mathematics course.</figcaption>
         </figure>
       </section>
@@ -116,7 +119,7 @@
         <div class="archive-controls">
           <label class="search-field">
             <span>Search archive</span>
-            <input id="archive-search" type="search" placeholder="Try calculus or 2024" autocomplete="off">
+            <input id="archive-search" type="search" placeholder="Try calculus or 2024" autocomplete="off" />
           </label>
           <label class="select-field">
             <span>Level</span>
@@ -176,7 +179,7 @@
       </div>
       <div class="footer-brand">
         <a class="brand" href="https://trustjonathan.github.io/STUDY-HUB/">
-          <img src="logo.png" width="32" height="32" alt="">
+          <img src={logo.src} width="32" height="32" alt="" />
           <span>Study Hub / Mathematics</span>
         </a>
         <p>Free study resources for focused, confident revision.</p>
@@ -197,7 +200,7 @@
 
         <label class="form-field">
           <span>Resource title</span>
-          <input name="title" type="text" minlength="3" maxlength="120" required>
+          <input name="title" type="text" minlength="3" maxlength="120" required />
         </label>
         <div class="form-grid">
           <label class="form-field">
@@ -222,15 +225,15 @@
         </div>
         <label class="form-field">
           <span>Year (optional)</span>
-          <input name="year" type="number" min="1990" max="2035" inputmode="numeric">
+          <input name="year" type="number" min="1990" max="2035" inputmode="numeric" />
         </label>
         <label class="form-field">
           <span>File</span>
-          <input name="file" type="file" accept=".pdf,.doc,.docx,.rtf,.txt" required>
+          <input name="file" type="file" accept=".pdf,.doc,.docx,.rtf,.txt" required />
           <small>PDF, Word, RTF, or text file. Maximum 50 MB.</small>
         </label>
         <label class="rights-check">
-          <input name="rights_confirmed" type="checkbox" required>
+          <input name="rights_confirmed" type="checkbox" required />
           <span>I have permission to share this material with the public.</span>
         </label>
         <div class="verification" id="turnstile-widget"></div>
@@ -241,5 +244,7 @@
         </div>
       </form>
     </dialog>
+
+    <script src="../scripts/archive-entry.js"></script>
   </body>
 </html>

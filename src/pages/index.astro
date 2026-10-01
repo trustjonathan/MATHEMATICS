@@ -1,0 +1,19 @@
+---
+const archivePath = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/archive.html`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${archivePath}`} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mathematics Archive | Study Hub</title>
+    <script is:inline define:vars={{ archivePath }}>
+      window.location.replace(new URL(archivePath, window.location.href).href);
+    </script>
+  </head>
+  <body>
+    <p>Continue to the <a href={archivePath}>Mathematics archive</a>.</p>
+  </body>
+</html>

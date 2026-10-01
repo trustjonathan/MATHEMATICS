@@ -2,11 +2,17 @@
 
 The archive reads published Mathematics resources from `study_hub_resources` in the Study Hub Supabase project. Community uploads are stored in a separate private bucket and remain pending until a curator reviews them.
 
-## Configure the static site
+## Work on the Astro archive
+
+The archive page source is `src/pages/archive.html.astro`; the root `src/pages/index.astro` redirects to it. Do not edit generated files in `dist/` or recreate root-level `archive.html`/`index.html` files. Shared archive behavior and styles remain in `archive.js` and `archive.css`.
+
+Install dependencies with `npm install`, run a local preview with `npm run dev`, and build the deployable site with `npm run build`. The build writes the published pages to `dist/`, including `dist/archive.html`.
+
+## Configure the public archive
 
 Edit `supabase-config.js` with the project's public Supabase URL and anon/publishable key, the deployed `submit-math-resource` function URL, and a Cloudflare Turnstile site key. These are public browser values; never put a service-role key in this file.
 
-For local preview, serve this folder over HTTP (for example, `python -m http.server 5500`) and use a Turnstile test site key configured for `127.0.0.1`.
+For local preview, use a Turnstile test site key configured for `localhost`.
 
 ## Deploy the secure intake
 
