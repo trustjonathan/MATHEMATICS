@@ -2,13 +2,14 @@
   'use strict';
 
   const config = window.MATH_ARCHIVE_CONFIG || {};
-  const state = { items: [], category: 'all', page: 1, pageSize: 24 };
+  const state = { items: [], category: 'all', selectedKey: null };
   const list = document.querySelector('#resource-list');
+  const resourceIndex = document.querySelector('#resource-index');
+  const resourceIndexCount = document.querySelector('#resource-index-count');
   const status = document.querySelector('#archive-status');
   const search = document.querySelector('#archive-search');
   const levelFilter = document.querySelector('#level-filter');
   const sortOrder = document.querySelector('#sort-order');
-  const loadMore = document.querySelector('#load-more');
   const dialog = document.querySelector('#contribution-dialog');
   const contributionForm = document.querySelector('#contribution-form');
   const uploadStatus = document.querySelector('#upload-status');
@@ -57,6 +58,10 @@
     return element;
   }
 
+  function resourceKey(item) {
+    return `${item.category}:${item.storage_bucket}:${item.storage_path}`;
+  }
+
   function getFilteredItems() {
     const query = search.value.trim().toLowerCase();
     const level = levelFilter.value;
@@ -80,23 +85,63 @@
 
   function render() {
     const filtered = getFilteredItems();
-    const visible = filtered.slice(0, state.page * state.pageSize);
     list.replaceChildren();
+    resourceIndex.replaceChildren();
     status.textContent = `${filtered.length} resource${filtered.length === 1 ? '' : 's'} found`;
+    resourceIndexCount.textContent = String(filtered.length);
 
     if (!filtered.length) {
-      list.append(makeState(state.items.length ? 'No resources match those filters.' : 'No published Mathematics resources yet.'));
-      loadMore.hidden = true;
+      const message = state.items.length ? 'No resources match those filters.' : 'No published Mathematics resources yet.';
+      resourceIndex.append(makeState(message));
+      list.append(makeState(message));
       return;
     }
 
-    for (const item of visible) {
+    if (!filtered.some((item) => resourceKey(item) === state.selectedKey)) {
+      state.selectedKey = resourceKey(filtered[0]);
+    }
+
+    filtered.forEach((item, index) => {
+      const key = resourceKey(item);
+      const entryId = `mathematics-resource-${index + 1}`;
+      const itemTitle = item.title || item.original_filename || 'Mathematics resource';
+
+      const indexButton = document.createElement('button');
+      indexButton.className = 'resource-index-item';
+      indexButton.type = 'button';
+      indexButton.dataset.resourceKey = key;
+      indexButton.setAttribute('aria-pressed', String(key === state.selectedKey));
+      const number = document.createElement('span');
+      number.className = 'resource-index-number';
+      number.textContent = String(index + 1).padStart(3, '0');
+      const indexTitle = document.createElement('span');
+      indexTitle.className = 'resource-index-title';
+      indexTitle.textContent = itemTitle;
+      indexButton.append(number, indexTitle);
+      indexButton.addEventListener('click', () => {
+        state.selectedKey = key;
+        resourceIndex.querySelectorAll('.resource-index-item').forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.resourceKey === key));
+        });
+        list.querySelectorAll('.resource-entry').forEach((entry) => {
+          entry.classList.toggle('is-selected', entry.dataset.resourceKey === key);
+        });
+        document.getElementById(entryId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      resourceIndex.append(indexButton);
+
       const row = document.createElement('article');
-      row.className = 'resource-row';
+      row.id = entryId;
+      row.className = `resource-entry${key === state.selectedKey ? ' is-selected' : ''}`;
+      row.dataset.resourceKey = key;
+      row.setAttribute('aria-labelledby', `${entryId}-title`);
+      const heading = document.createElement('div');
+      heading.className = 'resource-entry-heading';
       const details = document.createElement('div');
       const title = document.createElement('h3');
       title.className = 'resource-title';
-      title.textContent = item.title || item.original_filename || 'Mathematics resource';
+      title.id = `${entryId}-title`;
+      title.textContent = itemTitle;
       const meta = document.createElement('div');
       meta.className = 'resource-meta';
       const category = document.createElement('span');
@@ -110,6 +155,15 @@
         meta.append(detail);
       }
       details.append(title, meta);
+      heading.append(details);
+      row.append(heading);
+
+      if (item.original_filename) {
+        const filename = document.createElement('p');
+        filename.className = 'resource-filename';
+        filename.textContent = item.original_filename;
+        row.append(filename);
+      }
 
       const open = document.createElement('a');
       open.className = 'resource-open';
@@ -118,18 +172,23 @@
       open.rel = 'noopener noreferrer';
       open.textContent = 'Open resource';
       open.setAttribute('aria-label', `Open ${title.textContent}`);
-      row.append(details, open);
+      row.append(open);
       list.append(row);
-    }
 
-    loadMore.hidden = visible.length >= filtered.length;
+      if ((index + 1) % 8 === 0 && index < filtered.length - 1) {
+        const adSlot = document.createElement('div');
+        adSlot.className = 'archive-ad-slot';
+        adSlot.dataset.adSlot = `mathematics-archive-${Math.floor((index + 1) / 8)}`;
+        list.append(adSlot);
+      }
+    });
   }
 
   async function loadArchive() {
     if (!config.supabaseUrl || !config.anonKey) {
       status.textContent = 'The archive is not connected yet. Supabase public configuration is required.';
       list.replaceChildren(makeState('Mathematics resources are temporarily unavailable.', true));
-      loadMore.hidden = true;
+      resourceIndex.replaceChildren(makeState('Mathematics resources are temporarily unavailable.', true));
       return;
     }
 
@@ -145,6 +204,7 @@
     } catch (error) {
       status.textContent = error.message || 'The Mathematics archive could not be loaded.';
       list.replaceChildren(makeState('The archive could not be loaded. Check the connection and try again.', true));
+      resourceIndex.replaceChildren();
       const retry = document.createElement('button');
       retry.className = 'button button-outline';
       retry.type = 'button';
@@ -198,17 +258,15 @@
   document.querySelectorAll('.archive-tabs button').forEach((button) => {
     button.addEventListener('click', () => {
       state.category = button.dataset.category;
-      state.page = 1;
       document.querySelectorAll('.archive-tabs button').forEach((tab) => {
         tab.setAttribute('aria-pressed', String(tab === button));
       });
       render();
     });
   });
-  search.addEventListener('input', () => { state.page = 1; render(); });
-  levelFilter.addEventListener('change', () => { state.page = 1; render(); });
+  search.addEventListener('input', render);
+  levelFilter.addEventListener('change', render);
   sortOrder.addEventListener('change', render);
-  loadMore.addEventListener('click', () => { state.page += 1; render(); });
 
   document.querySelector('#open-contribution').addEventListener('click', () => dialog.showModal());
   document.querySelector('#close-contribution').addEventListener('click', () => dialog.close());

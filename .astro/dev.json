@@ -1,22 +1,14 @@
 {
-	"pid": 24416,
+	"pid": 6764,
 	"port": 4324,
-	"url": "http://localhost:4324",
+	"url": "http://127.0.0.1:4324",
 	"urls": {
 		"local": [
-			"http://localhost:4324/"
+			"http://127.0.0.1:4324/"
 		],
-		"network": [
-			"http://172.23.208.1:4324/",
-			"http://192.168.45.198:4324/",
-			"http://172.22.0.1:4324/"
-		],
-		"networkInterfaceNames": [
-			"vEthernet (Default Switch)",
-			"Wi-Fi",
-			"vEthernet (WSL (Hyper-V firewall))"
-		]
+		"network": [],
+		"networkInterfaceNames": []
 	},
 	"background": false,
-	"startedAt": "2026-10-01T20:29:35.805Z"
+	"startedAt": "2026-10-02T00:46:26.516Z"
 }
