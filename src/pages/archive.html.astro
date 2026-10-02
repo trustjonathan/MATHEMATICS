@@ -1,7 +1,10 @@
 ---
 import '../../archive.css';
-import logo from '../../logo.png';
 import mathematicsImage from '../../mathematics.jpg';
+
+const brandIcon = 'https://trustjonathan.github.io/STUDY-HUB/favicon.svg';
+const socialImage = 'https://trustjonathan.github.io/STUDY-HUB/social-preview.png';
+const socialDescription = 'Search Mathematics notes, worked examples, and exam practice resources from Study Hub.';
 ---
 
 <!doctype html>
@@ -13,12 +16,26 @@ import mathematicsImage from '../../mathematics.jpg';
     <meta name="theme-color" content="#f4f5ef" />
     <link rel="canonical" href="https://trustjonathan.github.io/MATHEMATICS/archive.html" />
     <meta property="og:title" content="Mathematics Archive | Study Hub" />
-    <meta property="og:description" content="Search Mathematics notes, worked examples, and exam practice resources from Study Hub." />
+    <meta property="og:description" content={socialDescription} />
     <meta property="og:url" content="https://trustjonathan.github.io/MATHEMATICS/archive.html" />
-    <meta property="og:image" content="https://trustjonathan.github.io/MATHEMATICS/mathematics.jpg" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:secure_url" content={socialImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Study Hub connects Biology, Chemistry, and Mathematics notes with exam practice." />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Study Hub" />
+    <meta property="og:locale" content="en_UG" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mathematics Archive | Study Hub" />
+    <meta name="twitter:description" content={socialDescription} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Study Hub connects Biology, Chemistry, and Mathematics notes with exam practice." />
     <title>Mathematics Archive | Study Hub</title>
-    <link rel="icon" href={logo.src} type="image/png" />
+    <link rel="icon" type="image/svg+xml" href={brandIcon} />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://trustjonathan.github.io/STUDY-HUB/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://trustjonathan.github.io/STUDY-HUB/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
@@ -41,7 +58,7 @@ import mathematicsImage from '../../mathematics.jpg';
           <a href="#archive" aria-current="page">Archive</a>
         </nav>
         <a class="brand" href="https://trustjonathan.github.io/STUDY-HUB/" aria-label="Study Hub home">
-          <img src={logo.src} width="38" height="38" alt="" />
+          <img src={brandIcon} width="38" height="38" alt="" />
           <span>Study Hub</span>
         </a>
         <nav class="header-actions" aria-label="Archive actions">
@@ -196,7 +213,7 @@ import mathematicsImage from '../../mathematics.jpg';
       </div>
       <div class="footer-brand">
         <a class="brand" href="https://trustjonathan.github.io/STUDY-HUB/">
-          <img src={logo.src} width="32" height="32" alt="" />
+          <img src={brandIcon} width="32" height="32" alt="" />
           <span>Study Hub / Mathematics</span>
         </a>
         <p>Free study resources for focused, confident revision.</p>
